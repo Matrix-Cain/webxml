@@ -33,7 +33,7 @@ return path
 
 ![image-2](https://github.com/zwh-china/webxml/raw/master/img/2.png)
 
-![image-3](https://github.com/zwh-china/webxml/raw/master/img/img/3.png)
+![image-3](https://github.com/zwh-china/webxml/raw/master/img/3.png)
 
 可以看到存在一条路径绕开了`CheckIsLoggedFilter`这个鉴权filter。通过此方式辅助查找未授权等漏洞
 

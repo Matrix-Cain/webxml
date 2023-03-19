@@ -16,7 +16,7 @@ type FilterMap struct {
 	matchAllServletNames bool
 }
 
-func NewFilterMap(filterMapping xmlparser.FilterMapping) *FilterMap {
+func NewFilterMap(filterMapping *xmlparser.FilterMapping) *FilterMap {
 	filterMap := &FilterMap{
 		FilterName:      filterMapping.FilterName,
 		UrlPattern:      filterMapping.UrlPattern,

@@ -10,7 +10,7 @@ type FilterDef struct {
 	InitParamsValues []string
 }
 
-func NewFilterDef(filter xmlparser.Filter) *FilterDef {
+func NewFilterDef(filter *xmlparser.Filter) *FilterDef {
 	filterDef := &FilterDef{
 		FilterName:  filter.FilterName,
 		FilterClass: filter.FilterClass,

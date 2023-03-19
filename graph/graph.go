@@ -78,7 +78,7 @@ func buildMainNodeForApp(projectName string, session neo4j.SessionWithContext) {
 	}
 }
 
-func buildStandAloneNode(listener xmlparser.Listener, session neo4j.SessionWithContext) {
+func buildStandAloneNode(listener *xmlparser.Listener, session neo4j.SessionWithContext) {
 	ctx := context.Background()
 	_, err := session.Run(ctx, "MERGE (:Listener {class: $class})", map[string]interface{}{
 		"class": listener.ListenerClass,
@@ -107,7 +107,7 @@ func buildServletInvocationChain(wrapper *Wrapper, session neo4j.SessionWithCont
 				if pathVerbose {
 					_, err = session.Run(ctx, "MATCH (a:App)"+
 						"MERGE (b:Filter {name: $name, class: $class, initParamsKeys: $initParamsKeys, initParamsValues: $initParamsValues})"+
-						fmt.Sprintf("MERGE (a)-[:%v {url: $url}]->(b)", wrapper.ServletName), map[string]interface{}{
+						fmt.Sprintf("MERGE (a)-[:`%v` {url: $url}]->(b)", wrapper.ServletName), map[string]interface{}{
 						"name":             filter.FilterName,
 						"class":            filter.FilterClass,
 						"initParamsKeys":   filter.InitParamsKeys,
@@ -130,7 +130,7 @@ func buildServletInvocationChain(wrapper *Wrapper, session neo4j.SessionWithCont
 			if pathVerbose {
 				_, err = session.Run(ctx, "MATCH (a:Filter {name: $name1, class: $class1, initParamsKeys: $initParamsKeys1, initParamsValues: $initParamsValues1})"+
 					"MERGE (b:Filter {name: $name, class: $class, initParamsKeys: $initParamsKeys, initParamsValues: $initParamsValues})"+
-					fmt.Sprintf("MERGE (a)-[:%v {url: $url}]->(b)", wrapper.ServletName), map[string]interface{}{
+					fmt.Sprintf("MERGE (a)-[:`%v` {url: $url}]->(b)", wrapper.ServletName), map[string]interface{}{
 					"name":              filter.FilterName,
 					"class":             filter.FilterClass,
 					"initParamsKeys":    filter.InitParamsKeys,
@@ -167,7 +167,7 @@ func buildServletInvocationChain(wrapper *Wrapper, session neo4j.SessionWithCont
 		if pathVerbose {
 			_, err = session.Run(ctx, "MATCH (a:Filter {name: $name, class: $class, initParamsKeys: $initParamsKeys, initParamsValues: $initParamsValues})"+
 				"MERGE (b:Servlet {name: $name1, class: $class1, initParamsKeys: $initParamsKeys1, initParamsValues: $initParamsValues1, jspFile: $jspFile1})"+
-				fmt.Sprintf("MERGE (a)-[:%v {url: $url}]->(b)", wrapper.ServletName), map[string]interface{}{
+				fmt.Sprintf("MERGE (a)-[:`%v` {url: $url}]->(b)", wrapper.ServletName), map[string]interface{}{
 				"name":              filterChains[len(filterChains)-1].FilterName,
 				"class":             filterChains[len(filterChains)-1].FilterClass,
 				"initParamsKeys":    filterChains[len(filterChains)-1].InitParamsKeys,
@@ -205,7 +205,7 @@ func buildServletInvocationChain(wrapper *Wrapper, session neo4j.SessionWithCont
 		if pathVerbose {
 			_, err = session.Run(ctx, "MATCH (a:App)"+
 				"MERGE (b:Servlet {name: $name, class: $class, initParamsKeys: $initParamsKeys, initParamsValues: $initParamsValues, jspFile: $jspFile})"+
-				fmt.Sprintf("MERGE (a)-[:%v {url: $url}]->(b)", wrapper.ServletName), map[string]interface{}{
+				fmt.Sprintf("MERGE (a)-[:`%v` {url: $url}]->(b)", wrapper.ServletName), map[string]interface{}{
 				"name":             wrapper.ServletName,
 				"class":            wrapper.ServletClass,
 				"initParamsKeys":   wrapper.InitParamsKeys,

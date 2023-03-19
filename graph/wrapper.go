@@ -12,7 +12,7 @@ type Wrapper struct {
 	JSPFile          string
 }
 
-func NewWrapper(servlet xmlparser.Servlet, url []string) *Wrapper {
+func NewWrapper(servlet *xmlparser.Servlet, url []string) *Wrapper {
 	wrapper := &Wrapper{
 		ServletName:  servlet.ServletName,
 		ServletClass: servlet.ServletClass,
